@@ -21,7 +21,7 @@ resource "aws_autoscaling_group" "asg" {
 
 resource "aws_launch_template" "frontend" {
   name          = "${var.candidate}-frontend"
-  image_id      = "" # TODO: Work out the Amazon Linux 2 AMI ID
+  image_id      = "ami-03d6f0efd7d3a3799"
   instance_type = "t2.micro"
 
   user_data = filebase64("${path.module}/scripts/bootstrap.sh")
@@ -106,8 +106,8 @@ resource "aws_security_group" "node" {
 
 resource "aws_security_group_rule" "node_ingress" {
   type              = "ingress"
-  from_port         = 0
-  to_port           = 0
+  from_port         = 80
+  to_port           = 80
   protocol          = "all"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "${aws_security_group.node.id}"
